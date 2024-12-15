@@ -105,6 +105,19 @@ public class PerfilFragment extends Fragment {
     }
 
     public void salvarPerfil() {
+        // Salvar no SharedPreferences
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nome", perfil.getNome());
+        editor.putString("dataNascimento", perfil.getDataNascimento());
+        editor.putString("genero", perfil.getGenero());
+        editor.putString("email", perfil.getEmail());
+        editor.putString("telefone", perfil.getTelefone());
+        // Salvando lugares visitados como uma String, já que SharedPreferences não suporta arrays diretament
+        String lugaresString = TextUtils.join(",", perfil.getLugaresVisitados());
+        editor.putString("lugaresVisitados", lugaresString);
+
+        // Salvar no banco
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         long newRowId = dbHelper.inserirPerfil(perfil);
     }
