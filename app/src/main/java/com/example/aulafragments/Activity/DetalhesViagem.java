@@ -24,7 +24,12 @@ public class DetalhesViagem extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     ImageButton btnPlayPause;
     boolean isPlaying = false;
-
+    String origem;
+    String destino;
+    String dataIda;
+    String dataVolta;
+    int pessoas;
+    float valor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +51,12 @@ public class DetalhesViagem extends AppCompatActivity {
         }
 
         // Obtendo os dados do pacote de viagem
-        String origem = bundle.getString("origem");
-        String destino = bundle.getString("destino");
-        String dataIda = bundle.getString("dataIda");
-        String dataVolta = bundle.getString("dataVolta");
-        int pessoas = bundle.getInt("pessoas");
-        float valor = bundle.getFloat("valor");
+         origem = bundle.getString("origem");
+         destino = bundle.getString("destino");
+         dataIda = bundle.getString("dataIda");
+         dataVolta = bundle.getString("dataVolta");
+         pessoas = bundle.getInt("pessoas");
+         valor = bundle.getFloat("valor");
 
         // Exibindo os dados na interface
         tvOrigem.setText(origem);
@@ -130,7 +135,14 @@ public class DetalhesViagem extends AppCompatActivity {
 
     // Redirecionar ao Checkout
     public void comprar(View view) {
-        Intent intent = new Intent(this, Checkout.class);
+        Intent intent = new Intent(this, Preeencher.class);
+
+        intent.putExtra("origem",origem);
+        intent.putExtra("destino",destino);
+        intent.putExtra("dataIda",dataIda);
+        intent.putExtra("dataVolta",dataVolta);
+        intent.putExtra("pessoas",pessoas);
+        intent.putExtra("valor",valor);
         startActivity(intent);
     }
 

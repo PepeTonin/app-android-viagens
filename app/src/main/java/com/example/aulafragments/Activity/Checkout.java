@@ -1,23 +1,26 @@
 package com.example.aulafragments.Activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.aulafragments.Database.DatabaseHelper;
 import com.example.aulafragments.R;
 
 public class Checkout extends AppCompatActivity {
 
     private TextView tvNome;
     private TextView tvDataNascimento;
-    private TextView tvGenero;
     private TextView tvEmail;
     private TextView tvTelefone;
+    private TextView tvOrigem;
+    private TextView tvDestino;
+    private TextView tvIda;
+    private TextView tvVolta;
+    private TextView tvPessoas;
+    private TextView tvValor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,41 +29,43 @@ public class Checkout extends AppCompatActivity {
 
         tvNome = findViewById(R.id.tvCheckoutNome);
         tvDataNascimento = findViewById(R.id.tvDataNascCheckout);
-        tvGenero = findViewById(R.id.tvGeneroCheckout);
         tvEmail = findViewById(R.id.tvEmailCheckout);
         tvTelefone = findViewById(R.id.tvTelefoneCheckout);
+        tvOrigem = findViewById(R.id.tvOrigem);;
+        tvDestino = findViewById(R.id.tvDestino);;
+        tvIda = findViewById(R.id.tvIda);;
+        tvVolta = findViewById(R.id.tvVolta);;
+        tvPessoas = findViewById(R.id.tvPessoas);;
+        tvValor = findViewById(R.id.tvValor);;
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Intent intent = getIntent();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM perfil", null);
+        String origem = intent.getStringExtra("origem");
+        String destino = intent.getStringExtra("destino");
+        String dataIda = intent.getStringExtra("dataIda");
+        String dataVolta = intent.getStringExtra("dataVolta");
+        int pessoas = intent.getIntExtra("pessoas", 0);
+        float valor = intent.getFloatExtra("valor", 0);
 
-        int indiceNome = cursor.getColumnIndex("nome");
-        int indiceDataNascimento = cursor.getColumnIndex("dataNascimento");
-        int indiceGenero = cursor.getColumnIndex("genero");
-        int indiceEmail = cursor.getColumnIndex("email");
-        int indiceTelefone = cursor.getColumnIndex("telefone");
+        String nome = intent.getStringExtra("nome");
+        String dataNascimento = intent.getStringExtra("nascimento");
+        String email = intent.getStringExtra("email");
+        String telefone = intent.getStringExtra("telefone");
 
-        if (cursor.moveToFirst()) {
-            String nome = cursor.getString(indiceNome);
-            String dataNascimento = cursor.getString(indiceDataNascimento);
-            String genero = cursor.getString(indiceGenero);
-            String email = cursor.getString(indiceEmail);
-            String telefone = cursor.getString(indiceTelefone);
-            tvNome.setText(nome);
-            tvDataNascimento.setText(dataNascimento);
-            tvGenero.setText(genero);
-            tvEmail.setText(email);
-            tvTelefone.setText(telefone);
-        }
-
-        cursor.close();
-        db.close();
+        tvNome.setText("Nome: "+nome);
+        tvDataNascimento.setText("Data de Nascimento: "+dataNascimento);
+        tvEmail.setText("Email: "+email);
+        tvTelefone.setText("Telefone: "+telefone);
+        tvOrigem.setText("Origem: "+origem);
+        tvDestino.setText("Destino: "+destino);
+        tvIda.setText("Data da Ida: "+dataIda);
+        tvVolta.setText("Data da Volta: "+dataVolta);
+        tvPessoas.setText("Quantidade de Pessoas: "+pessoas);
+        tvValor.setText("Valor: "+valor);
     }
 
-
-
     public void voltar(View view) {
-        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

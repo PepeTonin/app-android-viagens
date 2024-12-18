@@ -17,6 +17,10 @@
             android:exported="false"
             android:theme="@style/Theme.AulaFragments" />
         <activity
+            android:name=".Activity.Preeencher"
+            android:exported="false"
+            android:theme="@style/Theme.AulaFragments" />
+        <activity
             android:name=".Activity.DetalhesViagem"
             android:exported="false"
             android:theme="@style/Theme.AulaFragments" />
